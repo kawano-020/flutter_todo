@@ -33,9 +33,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Map data;
   List useData;
+  String initUrl = "http://192.168.3.50:5000/";
 
-  Future getData() async{
-    http.Response response = await http.get("http://192.168.3.50:5000");
+  Future getData(url) async{
+    http.Response response = await http.get(url);
     data = json.decode(response.body);
     setState(() {
       useData = data["list"];
@@ -44,7 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void initState() {
     super.initState();
-    getData();
+    getData(initUrl);
+  }
+
+  void swichSearch(word) {
+    getData(initUrl+"search/$word");
   }
 
   Widget build(BuildContext context) {
@@ -94,6 +99,5 @@ class _MyHomePageState extends State<MyHomePage> {
 class ScreenArguments {
   final title;
   final content;
-
   ScreenArguments(this.title, this.content);
 }
